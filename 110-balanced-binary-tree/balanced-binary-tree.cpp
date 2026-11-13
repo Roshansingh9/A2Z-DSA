@@ -11,22 +11,23 @@
  */
 class Solution {
     private:
-    int cal_height(TreeNode* root){
-        if(!root) return 0;
-        int lh=cal_height(root->left);
-        int rh=cal_height(root->right);
+    int findHeight(TreeNode* node){
+        if(!node){
+            return 0;
+        }
+        int lh=findHeight(node->left);
+        int rh=findHeight(node->right);
         return 1+max(lh,rh);
-
     }
 public:
     bool isBalanced(TreeNode* root) {
-       if(!root) return true;
-        int left=cal_height(root->left);
-        int right=cal_height(root->right);
-        if(abs(left - right) > 1) return false;
-        bool lh=isBalanced(root->left);
-        bool rh=isBalanced(root->right);
-        if(!rh || !lh) return false;
-        return true;
+        if(!root){
+            return true;
+        }
+        int lh=findHeight(root->left);
+        int rh=findHeight(root->right);
+
+        if(abs(lh-rh)>1) return false;
+        return isBalanced(root->left) && isBalanced(root->right);
     }
 };
